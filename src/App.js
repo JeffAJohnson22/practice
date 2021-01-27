@@ -1,27 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef} from "react";
 import uuid from "react-uuid";
 import List from "./components/List";
 import CompleteList from "./components/CompleteList";
-
+import { Button, Other, Select, SmallerText } from "./styled/styledComps";
 const App = () => {
   const [input, setInputs] = useState("");
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState("");
   const [alltypes, setAllTypes] = useState("");
   const [product, setProduct] = useState([]);
-  // const [completedProducts, setCompletedProducts] = useState([]);
   const inputEl = useRef(null);
   const valueEl = useRef(null);
   const quantEl = useRef(null);
   const typeEl = useRef(null);
-
-  // const [edit, setEdit] = useState({
-  //   id: null,
-  //   name: "",
-  //   price: null,
-  //   completed: false,
-  //   quantity: null,
-  // });
 
   const addItem = (item) => {
     const allproducts = [item, ...product];
@@ -41,7 +32,6 @@ const App = () => {
     setProduct(value);
   };
 
-  // console.log(completedProducts, "completedProducts");
   const need = product.filter((item) => item.completed === false);
   const completedProducts = product.filter((item) => item.completed === true);
 
@@ -54,7 +44,7 @@ const App = () => {
     addItem({
       id: uuid().replace(/-/g, "").substring(0, 10),
       name: input,
-      price: amount,
+      price: parseFloat(amount) * quantity,
       completed: false,
       quantity,
       types: alltypes,
@@ -80,35 +70,40 @@ const App = () => {
     { name: "gas" },
     { name: "plasma" },
   ];
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
+      <div style={{ display: "flex", justifyContent: "center", margin: 40 }}>
         <form onSubmit={handleSubmit}>
-          <input
-            alltypes="text"
+          <SmallerText>Item:</SmallerText>
+          <Other
+            types="text"
             ref={inputEl}
             value={input}
             placeholder="item name"
             onChange={handleChange}
           />
-          <input
+          <SmallerText>Prince:</SmallerText>
+          <Other
             type="text"
-            value={amount}
+            value={amount.replace(/[^0-9.]/g, "").trim()}
             ref={valueEl}
-            placeholder="amount"
+            placeholder="price"
             onChange={handleChange}
           />
-          <select ref={quantEl} value={quantity} onChange={handleChange}>
+          <SmallerText>Quantity:</SmallerText>
+          <Select ref={quantEl} value={quantity} onChange={handleChange}>
             {q.map((qAmount) => (
               <option value={qAmount}>{qAmount}</option>
             ))}
-          </select>
-          <select ref={typeEl} value={quantity} onChange={handleChange}>
+          </Select>
+          <SmallerText>Type:</SmallerText>
+          <Select ref={typeEl} value={quantity} onChange={handleChange}>
             {types.map(({ name }) => (
               <option value={name}>{name}</option>
             ))}
-          </select>
-          <input type="submit" value="add items" />
+          </Select>
+          <Button type="submit" value="Add Item" />
         </form>
       </div>
 
