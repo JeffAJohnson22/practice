@@ -65,10 +65,10 @@ const App = () => {
     q[i] = i;
   }
   const types = [
-    { name: "liquid" },
-    { name: "solid" },
-    { name: "gas" },
-    { name: "plasma" },
+    { name: "Slytherin" },
+    { name: "Gryffindor" },
+    { name: "HufflePuff" },
+    { name: "RavenClaw" },
   ];
 
   return (
